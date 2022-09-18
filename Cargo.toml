@@ -1,5 +1,7 @@
 [package]
+description = "A simple equation solver that evaluates simple mathemetaical expressions"
 edition = "2021"
+license = "MIT"
 name = "equation-solver"
 version = "0.1.0"
 
