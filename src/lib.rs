@@ -14,5 +14,6 @@ pub mod item;
 /// The parse module contains the parser which is used to take strings and turn them into equations.
 pub mod parse;
 
+
 pub use equation::Equation;
 pub use error::{EquationError, EquationErrorType};

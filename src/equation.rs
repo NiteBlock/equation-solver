@@ -1,3 +1,5 @@
+use std::collections::HashSet;
+
 use crate::{
     error::{EquationError, EquationErrorType},
     item::{Item, Operator},
@@ -118,7 +120,7 @@ impl Group {
                         let right = items.remove(i + 1);
                         let left = items.remove(i - 1);
                         let x = (left, right);
-                        println!("{:?}", x);
+                        // println!("{:?}", x);
                         if let (Item::Value(left), Item::Value(right)) = x.clone() {
                             let val = op.eval(left, right);
                             items[i - 1] = Item::Value(val);
@@ -143,6 +145,22 @@ impl Group {
                 EquationErrorType::UnexpectedToken,
             ))
         }
+    }
+    /// Lists the variables that are not set in an equation
+    pub fn list_vars(&self) -> HashSet<String> {
+        let mut vars = HashSet::new();
+        for item in self.items.iter() {
+            match item {
+                Item::Variable(val) => {
+                    vars.insert(val.clone());
+                }
+                Item::Group(val) => {
+                    vars.extend(val.list_vars());
+                }
+                _ => {}
+            }
+        }
+        vars
     }
 }
 
@@ -178,5 +196,9 @@ impl Equation {
     /// Evaluates the equation.
     pub fn evaluate(&self) -> Result<f64, EquationError> {
         self.inner.evaluate()
+    }
+    /// Gives a HashSet of all variables (that are not set) in the equation.
+    pub fn list_vars(&self) -> HashSet<String> {
+        self.inner.list_vars()
     }
 }

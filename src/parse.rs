@@ -74,7 +74,7 @@ impl ParseStream {
                         temp_i = self.0.len() + 1;
                     }
                     let var_name = self.0.get((i - 1)..(temp_i - 1)).unwrap();
-                    dbg!(var_name, &self.0, i, temp_i, self.0.len());
+                    // dbg!(var_name, &self.0, i, temp_i, self.0.len());
                     current_group.0.push(match var_name {
                         "log" => FunctionalOperator::Log.into(),
                         "ln" => FunctionalOperator::Ln.into(),
